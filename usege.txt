@@ -1,0 +1,15 @@
+
+環境構築:
+
+以下を順に実行
+
+$ cd <レポジトリ>
+$ docker build -t TEAM-5-APP_IMAGE:latest .
+$ docker run -it --name TEAM-5-APP -v .:/TEAM-5-APP TEAM-5-APP_IMAGE
+$ cd /TEAM-5-APP
+$ npx create-next-app:latest frontend \
+    --typescript \
+    --tailwind \
+    --import-alias "@/*" \
+    --use-npm \
+    --app
