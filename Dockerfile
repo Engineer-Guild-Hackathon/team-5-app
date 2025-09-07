@@ -1,14 +1,24 @@
 FROM ubuntu:latest
 
-RUN mkdir TEAM-5-APP \
-    && apt update \
-    && apt install -y python3 python3-pip npm\
-    && pip install -y fastapi==0.116.1 \
-    && pip install -y sqlmodel==0.0.24 \
-    && apt install -y mysql-server mysql-client
+RUN mkdir team-5-app
+RUN apt update 
+RUN apt install -y python3
+RUN apt install -y python3.12-venv
+RUN apt install -y npm
+
+WORKDIR /opt
+RUN python3 -m venv .env
+RUN . /opt/.env/bin/activate \
+    && pip install fastapi==0.116.1 \
+    && pip install sqlmodel==0.0.24 \
+    && pip install uvicorn==0.35.0
+    # && pip install phonemizer==3.3.0 \
+    # && pip install pyopenjtalk==0.4.1 \
+
+RUN echo "source /opt/.env/bin/activate && cd /team-5-app" >> /root/.bashrc
 
 EXPOSE 8000
 
 EXPOSE 3000
 
-VOLUME /TEAM-5-APP
+VOLUME /team-5-app
