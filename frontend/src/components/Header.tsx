@@ -4,9 +4,13 @@ export
 function Header() {
     return (
         <div
-            className="w-max h-97px bg-amber-300 top-0 left-0 border-2"
+            className="w-full h-[97px] border-b-[1px] border-[#DEE1E680] justify-center flex"
         >
-            こんにちは
+            <div
+                className=" mt-[59px] w-fit h-fit text-[18px] font-[600] select-none"
+            >
+                英語学習
+            </div>
         </div>
     );
 }
