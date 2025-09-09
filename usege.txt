@@ -1,0 +1,24 @@
+
+環境構築:
+
+以下を順に実行
+
+$ cd <レポジトリ>
+$ docker build -t team-5-app-image:latest .
+$ docker run -it --name team-5-app -v .:/team-5-app -p 3000:3000 -p 8000:8000 team-5-app-image
+(もし、frontend, backendが存在しない場合)
+$ npx create-next-app@15.5 frontend \
+    --ts \
+    --tailwind \
+    --import-alias "@/*" \
+    --use-npm \
+    --src-dir \
+    --turbopack \
+    --no-eslint \
+    --app \
+    --yes \
+    && mkdir backend
+
+(存在する場合)
+$ cd frontend
+$ npm install
