@@ -1,9 +1,14 @@
 
 import { auto_height_resize } from "@/funcs/auto_resize";
-import { useRef } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction, useRef } from "react";
+
+type Input_text_prop = {
+    onClick_func: MouseEventHandler<HTMLButtonElement>;
+    set_text: Dispatch<SetStateAction<string>>;
+}
 
 export
-function Input_text() {
+function Input_text({onClick_func, set_text}:Input_text_prop) {
 
     const text_area_ref = useRef<HTMLTextAreaElement|null>(null);
 
@@ -25,7 +30,10 @@ function Input_text() {
                 "
                 ref={text_area_ref}
                 placeholder="英文を入力してください"
-                onInput={()=>{auto_height_resize(text_area_ref)}}
+                onInput={(textarea)=>{
+                    set_text(textarea.currentTarget.value);
+                    auto_height_resize(text_area_ref);
+                }}
             />
             <button
                 className="
@@ -33,7 +41,7 @@ function Input_text() {
                     bg-emerald-400 h-[44px] rounded-[3px]
                     active:scale-[95%]
                 "
-                onClick={()=>{console.log("click\n")}}
+                onClick={onClick_func}
             >
                 <div
                     className="

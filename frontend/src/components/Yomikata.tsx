@@ -1,26 +1,25 @@
 import React, { useState } from "react";
+import Image from "next/image";
+import { get_Yomikaka_res } from "@/funcs/network";
 
-type read_type = {
-    Genbun: string;
-    Yomikata: string;
-};
+type Yomikata_props = {
+    data_list:Array<get_Yomikaka_res>;
+}
 
 export
-function Yomikata() {
-
-    const text_list = useState<Array<read_type>>([]);
+function Yomikata({data_list}:Yomikata_props) {
 
     return (
         <div
             className="
-                w-full min-h-[276px] p-[16px] mt-[24px]
+                flex flex-col w-full min-h-[276px] p-[16px] mt-[24px]
                 border-[1px] rounded-[6px] border-[#DEE1E6FF]
             "
         >
             <div
                 className="
                     flex items-center flex-row
-                    border-1 gap-2
+                    gap-2 mb-3
                 "
             >
                 <div
@@ -31,9 +30,13 @@ function Yomikata() {
                 >
                     英語
                 </div>
-                <svg className="h-8 w-8 text-gray-950"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
+                <Image
+                    src="/arrow_right.svg"
+                    className="w-[40px] h-[40px] border-1"
+                    alt=""
+                    width={40}
+                    height={40}
+                />
                 <div
                     className="
                         w-fit h-fit
@@ -43,7 +46,26 @@ function Yomikata() {
                     日本語
                 </div>
             </div>
-            <Genbun_text/>
+            {
+                data_list.map((item,idx)=>{
+                    return (
+                        <div
+                            className="
+                                flex flex-col gap-2
+                                mb-2
+                            "
+                            key={idx}
+                        >
+                            <Genbun_text
+                                text={item.original}
+                            />
+                            <Yomikata_text
+                                text={item.convert}
+                            />
+                        </div>
+                    );
+                })
+            }
         </div>
     );
 }
@@ -54,7 +76,12 @@ type Genbun_text_props = {
 
 function Genbun_text({text}:Genbun_text_props){
     return (
-        <div>
+        <div
+            className="
+                px-3
+                text-[20px] border-b-1
+            "
+        >
             {text}
         </div>
     );
@@ -66,7 +93,12 @@ type Yomikata_text_props = {
 
 function Yomikata_text({text}:Yomikata_text_props){
     return (
-        <div>
+        <div
+            className="
+                px-3
+                text-[20px] border-b-1
+            "
+        >
             {text}
         </div>
     );
