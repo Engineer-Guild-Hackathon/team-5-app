@@ -1,6 +1,7 @@
 
 import { auto_height_resize } from "@/funcs/auto_resize";
-import { Dispatch, MouseEventHandler, SetStateAction, useRef } from "react";
+import Image from "next/image";
+import { Dispatch, MouseEventHandler, SetStateAction, useRef, useState } from "react";
 
 type Input_text_prop = {
     onClick_func: MouseEventHandler<HTMLButtonElement>;
@@ -21,9 +22,10 @@ function Input_text({onClick_func, set_text}:Input_text_prop) {
                 border-[#DEE1E6FF]
             "
         >
+            <Dropdown/>
             <textarea
                 className="
-                    min-h-[102px] mt-[28px]
+                    min-h-[102px] mt-[12px]
                     w-full h-auto px-[12px] py-[5px]
                     font-[14px] border-[1px] rounded-[6px]
                     border-[#DEE1E6FF]
@@ -54,6 +56,81 @@ function Input_text({onClick_func, set_text}:Input_text_prop) {
                     変換
                 </div>
             </button>
+        </div>
+    );
+}
+
+const test_data:Array<string> = [
+    "日本語",
+    "英語",
+]
+
+type dropdown_props = {
+
+}
+
+export
+function Dropdown() {
+
+    const [open, setopen] = useState<boolean>(false);
+
+    return (
+        <div
+            className="
+                w-[200px] h-fit mt-[28px]
+            "
+        >
+            <div
+                className="
+                    w-fit h-fit
+                    text-[13px]
+                "
+            >
+                原文
+            </div>
+            <div
+                className="
+                    flex flex-row items-center
+                    w-full h-[30px]
+                    text-[20px] pl-3 border-[1px]
+                    border-[#B05BAAFF] rounded-md
+                "
+            >
+                日本語
+                <button
+                    className={`
+                        w-[20px] h-[20px]
+                        mr-[3px] ml-auto
+                        ${open ? "rotate-180":"rotate-0"}
+                        hover:border-1
+                    `}
+                    onClick={()=>setopen((before)=>!before)}
+                >
+                    <Image
+                        src="/arrow_down.svg"
+                        alt=""
+                        width={20}
+                        height={20}
+                    />
+                </button>
+            </div>
+            <div
+                className={`
+                    w-full max-h-[160px]
+                    ${open ? "h-fit":"h-0"}
+                    ${open ? "visible":"invisible"}
+                `}
+            >
+                {
+                    test_data.map((item,idx)=>{
+                        return (
+                            <div>
+                                
+                            </div>
+                        );
+                    })
+                }
+            </div>
         </div>
     );
 }

@@ -23,7 +23,7 @@ class Network {
                         "Content-Type": "application/json",
                     },
                     body:JSON.stringify({
-                        "convert_number":1,
+                        "convert_number":2,
                         "sentence":text
                     })
                 }
