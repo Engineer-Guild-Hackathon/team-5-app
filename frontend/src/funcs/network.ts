@@ -15,6 +15,7 @@ class Network {
 
     async get_Yomikata(lang: string, text:string) {
         try{
+            const send_lang = lang === "English" ? 1 : 2 ;
             const res = await fetch(
                 this.adress + "convert/",
                 {
@@ -23,7 +24,7 @@ class Network {
                         "Content-Type": "application/json",
                     },
                     body:JSON.stringify({
-                        "convert_number":2,
+                        "convert_number":send_lang,
                         "sentence":text
                     })
                 }

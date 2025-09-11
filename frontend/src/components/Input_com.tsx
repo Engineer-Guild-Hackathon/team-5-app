@@ -1,28 +1,68 @@
 
 import { auto_height_resize } from "@/funcs/auto_resize";
+import { useRef, useState } from "react";
+import { network, useResults, useScreenState } from "@/hooks/States";
 import Image from "next/image";
-import { Dispatch, MouseEventHandler, SetStateAction, useRef, useState } from "react";
-
-type Input_text_prop = {
-    onClick_func: MouseEventHandler<HTMLButtonElement>;
-    set_text: Dispatch<SetStateAction<string>>;
-}
 
 export
-function Input_text({onClick_func, set_text}:Input_text_prop) {
+function Input_text() {
+    
+    const {ScreenState, setScreenState} = useScreenState();
 
-    const text_area_ref = useRef<HTMLTextAreaElement|null>(null);
+    const [input_text, setinput_text] = useState<string>("");
+
+    const {From, To, setFrom, setTo,setResult} = useResults();
+
+    const textarea_ref = useRef<HTMLTextAreaElement | null>(null);
+
+    const onclick_func = async () => {
+        try{
+            setScreenState("waiting");
+            setResult(await network.get_Yomikata(From,input_text));
+            setScreenState("result");
+        }catch(e){
+            console.error(e);
+            setScreenState("input");
+        }
+    }
 
     return  (
         <div
             className="
                 relative w-full rounded-[10px]
                 mt-[24px] h-fit px-[16px]
-                border-[1px]
+                border-[1px] p-[16px]
                 border-[#DEE1E6FF]
             "
         >
-            <Dropdown/>
+            <div
+                className="
+                    w-fit
+                    flex flex-row gap-1
+                    justify-center
+                "
+            >
+                <Dropdown
+                    setLang={setFrom}
+                    Lang={From}
+                    DropDownTitle="原文"
+                />
+                <Image
+                    src="/arrow_right.svg"
+                    className="
+                        mt-[20px]
+                        mb-auto border-1
+                    "
+                    width={30}
+                    height={30}
+                    alt=""
+                />
+                <Dropdown
+                    setLang={setTo}
+                    Lang={To}
+                    DropDownTitle="読み方"
+                />
+            </div>
             <textarea
                 className="
                     min-h-[102px] mt-[12px]
@@ -30,20 +70,22 @@ function Input_text({onClick_func, set_text}:Input_text_prop) {
                     font-[14px] border-[1px] rounded-[6px]
                     border-[#DEE1E6FF]
                 "
-                ref={text_area_ref}
                 placeholder="英文を入力してください"
+                value={input_text}
+                ref={textarea_ref}
                 onInput={(textarea)=>{
-                    set_text(textarea.currentTarget.value);
-                    auto_height_resize(text_area_ref);
+                    setinput_text(textarea.currentTarget.value);
+                    auto_height_resize(textarea_ref);
                 }}
             />
             <button
                 className="
-                    mt-[12px] mb-[16px] w-full 
+                    mt-[12px] w-full 
                     bg-emerald-400 h-[44px] rounded-[3px]
                     active:scale-[95%]
                 "
-                onClick={onClick_func}
+                disabled={ScreenState === "waiting"}
+                onClick={onclick_func}
             >
                 <div
                     className="
@@ -62,22 +104,29 @@ function Input_text({onClick_func, set_text}:Input_text_prop) {
 
 const test_data:Array<string> = [
     "日本語",
-    "英語",
+    "English",
 ]
 
-type dropdown_props = {
-
+type Dropdown_props = {
+    setLang:(lang:string)=>void;
+    Lang:string;
+    DropDownTitle:string;
 }
 
 export
-function Dropdown() {
+function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
 
     const [open, setopen] = useState<boolean>(false);
+
+    const selected_func = (lang:string) => {
+        setLang(lang);
+        setopen((before)=>!before);
+    }
 
     return (
         <div
             className="
-                w-[200px] h-fit mt-[28px]
+                min-w-[110px] h-fit max-w-[180px]
             "
         >
             <div
@@ -86,7 +135,7 @@ function Dropdown() {
                     text-[13px]
                 "
             >
-                原文
+                {DropDownTitle}
             </div>
             <div
                 className="
@@ -96,7 +145,7 @@ function Dropdown() {
                     border-[#B05BAAFF] rounded-md
                 "
             >
-                日本語
+                {Lang}
                 <button
                     className={`
                         w-[20px] h-[20px]
@@ -119,14 +168,25 @@ function Dropdown() {
                     w-full max-h-[160px]
                     ${open ? "h-fit":"h-0"}
                     ${open ? "visible":"invisible"}
+                    overflow-y-scroll
+                    rounded-md border-1 border-[#dddddd]
+                    flex flex-col
                 `}
             >
                 {
                     test_data.map((item,idx)=>{
                         return (
-                            <div>
-                                
-                            </div>
+                            <button
+                                className="
+                                    text-left h-fit w-full
+                                    px-3 py-1
+                                    hover:bg-[#ff82f7]
+                                "
+                                key={idx}
+                                onClick={()=>selected_func(item)}
+                            >
+                                {item}
+                            </button>
                         );
                     })
                 }
