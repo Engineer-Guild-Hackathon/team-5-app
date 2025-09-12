@@ -1,45 +1,42 @@
+<<<<<<< HEAD
 "use client"
 
 import { Header } from "@/components/Header";
 import { Input_text } from "@/components/Input_com";
 import { Yomikata } from "@/components/Yomikata";
-import { useRef, useState } from "react";
-import * as net_conf from "@/network.json";
-import { Network, get_Yomikaka_res } from "@/funcs/network";
+import { useScreenState } from "@/hooks/States";
+
 
 export default
 function Home() {
 
-  const [condition, setcondition] = useState<string>("input");
+	const ScreenState = useScreenState((state)=>state.ScreenState);
 
-  const [input_text, setinput_text] = useState<string>("");
+	return (
+		<div className="flex w-screen h-screen flex-col bg-[url(/images/bg_image.png)] bg-cover">
+			<Header/>
+			<div className="px-[24px] w-full h-auto">
+				{
+					ScreenState === "result" ? 
+					<Yomikata
+						data_list={[]}
+					/> :
+					<Input_text/>
+				}
+			</div>
+		</div>
+	);
+=======
+"use client"
 
-  const [res_data, setres_data] = useState<Array<get_Yomikaka_res>>([]);
+import { Header } from "@/components/Header"
 
-  const net = useRef<Network>(new Network(net_conf.Adress));
-
+export default
+function Home() {
   return (
-    <div className="flex w-screen h-auto justify-center flex-col">
+    <div className="w-full h-fit">
       <Header/>
-      <div className="px-[24px] w-full h-auto">
-        {
-          condition === "input" ? <Input_text
-            set_text={setinput_text}
-            onClick_func={async () => {
-              try{
-                setres_data(await net.current.get_Yomikata("English", input_text));
-                setcondition("result");
-              }catch(error){
-                console.error(error);
-              }
-            }}
-          /> :
-          condition === "result" ? <Yomikata
-            data_list={res_data}
-          /> :
-          null
-        }
-      </div>
     </div>
   );
+>>>>>>> 81fe22eee1bfeeee364cd2f92dc4fe0d3eeeef37
 }

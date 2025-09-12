@@ -4,12 +4,16 @@ export
 function Header() {
     return (
         <div
-            className="w-full h-[97px] border-b-[1px] border-[#DEE1E680] justify-center flex"
+            className="w-full h-[97px] border-b-[1px] border-[#DEE1E680] justify-center flex bg-[#00000021]"
         >
             <div
-                className=" mt-[59px] w-fit h-fit text-[18px] font-[600] select-none"
+                className="
+                    my-auto w-fit h-fit
+                    text-[30px] font-[600] select-none
+                    text-[#ffffff]
+                "
             >
-                英語学習
+                フリガナLANGUAGE
             </div>
         </div>
     );
