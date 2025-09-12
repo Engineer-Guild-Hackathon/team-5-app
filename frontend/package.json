@@ -1,3 +1,29 @@
+<<<<<<< HEAD
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "WATCHPACK_POLLING=true next dev",
+    "build": "next build --turbopack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.5.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+=======
 {
   "name": "frontend",
   "version": "0.1.0",
@@ -21,3 +47,4 @@
     "tailwindcss": "^4"
   }
 }
+>>>>>>> 81fe22eee1bfeeee364cd2f92dc4fe0d3eeeef37
