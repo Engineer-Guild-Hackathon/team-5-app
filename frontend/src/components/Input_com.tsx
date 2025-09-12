@@ -31,6 +31,7 @@ function Input_text() {
             className="
                 relative w-full rounded-[10px]
                 mt-[24px] h-fit px-[16px]
+                bg-[#ffffff81]
                 border-[1px] p-[16px]
                 border-[#DEE1E6FF]
             "
@@ -48,7 +49,7 @@ function Input_text() {
                     DropDownTitle="原文"
                 />
                 <Image
-                    src="/arrow_right.svg"
+                    src="/images/arrow_right.svg"
                     className="
                         mt-[20px]
                         mb-auto border-1
@@ -68,7 +69,9 @@ function Input_text() {
                     min-h-[102px] mt-[12px]
                     w-full h-auto px-[12px] py-[5px]
                     font-[14px] border-[1px] rounded-[6px]
+                    bg-[#FFFFFF]
                     border-[#DEE1E6FF]
+                    text-[#000000]
                 "
                 placeholder="英文を入力してください"
                 value={input_text}
@@ -80,9 +83,9 @@ function Input_text() {
             />
             <button
                 className="
-                    mt-[12px] w-full 
+                    mt-[12px] w-full
                     bg-emerald-400 h-[44px] rounded-[3px]
-                    active:scale-[95%]
+                    active:scale-[95%] cursor-pointer
                 "
                 disabled={ScreenState === "waiting"}
                 onClick={onclick_func}
@@ -90,9 +93,10 @@ function Input_text() {
                 <div
                     className="
                         m-auto
-                        text-[12px]
+                        text-[16px]
                         active:scale-[95%]
                         select-none
+                        text-[#000000]
                     "
                 >
                     変換
@@ -132,7 +136,7 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
             <div
                 className="
                     w-fit h-fit
-                    text-[13px]
+                    text-[13px] text-[#000000]
                 "
             >
                 {DropDownTitle}
@@ -143,6 +147,7 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
                     w-full h-[30px]
                     text-[20px] pl-3 border-[1px]
                     border-[#B05BAAFF] rounded-md
+                    bg-[#ffffff] text-[#000000]
                 "
             >
                 {Lang}
@@ -151,12 +156,12 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
                         w-[20px] h-[20px]
                         mr-[3px] ml-auto
                         ${open ? "rotate-180":"rotate-0"}
-                        hover:border-1
+                        hover:border-1 cursor-pointer
                     `}
                     onClick={()=>setopen((before)=>!before)}
                 >
                     <Image
-                        src="/arrow_down.svg"
+                        src="/images/arrow_down.svg"
                         alt=""
                         width={20}
                         height={20}
@@ -171,6 +176,7 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
                     overflow-y-scroll
                     rounded-md border-1 border-[#dddddd]
                     flex flex-col
+                    bg-[#FFFFFFFF]
                 `}
             >
                 {
@@ -181,6 +187,7 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
                                     text-left h-fit w-full
                                     px-3 py-1
                                     hover:bg-[#ff82f7]
+                                    cursor-pointer
                                 "
                                 key={idx}
                                 onClick={()=>selected_func(item)}

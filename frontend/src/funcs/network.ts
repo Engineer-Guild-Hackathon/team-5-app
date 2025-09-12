@@ -5,6 +5,16 @@ type get_Yomikaka_res = {
     convert:string;
 }
 
+type score_detail = {
+    token:any,
+    confidence:number,
+}
+
+export
+type get_Yomikata_score_res = {
+    results:score_detail[],
+}
+
 export
 class Network {
     adress:string;
@@ -41,4 +51,28 @@ class Network {
         }
     }
 
+    async get_Yomikata_score(data:Blob, data_type:string) {
+        try{
+            console.log(`voice.${data_type.split("/")[1]}`);
+            const Form_datas = new FormData();
+            Form_datas.append("audio_file",data,`voice.${data_type.split("/")[1]}`);
+            Form_datas.append("engine_params","-a-general");
+            const res = await fetch(
+                this.adress + "pronunciation-assessment-en/",
+                {
+                    method:"POST",
+                    body: Form_datas
+                }
+            )
+            if(res.ok){
+                const result_data:get_Yomikata_score_res = await res.json();
+                return result_data;
+            }else{
+                const Error_text:string = await res.text();
+                throw new Error(`Statue: ${res.status}\nMessage: ${Error_text}`);
+            }
+        }catch(e){
+            throw new Error("error occer");
+        }
+    }
 }

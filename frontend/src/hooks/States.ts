@@ -1,10 +1,14 @@
 
 import { create } from "zustand";
 import { Network, get_Yomikaka_res } from "@/funcs/network";
+import { Audio } from "@/funcs/audio_record";
 import net_conf from "@/network.json";
 
 export 
 const network = new Network(net_conf.Adress);
+
+export
+const rec_voice = new Audio();
 
 type useScreenState_type = {
     ScreenState:string;
@@ -29,7 +33,7 @@ type useResult_type = {
 
 export
 const useResults = create<useResult_type>((set)=>({
-    From: "英語",
+    From: "English",
     To: "日本語",
     Result: [],
     

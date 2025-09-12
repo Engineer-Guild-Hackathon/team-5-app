@@ -12,17 +12,17 @@ function Home() {
 	const ScreenState = useScreenState((state)=>state.ScreenState);
 
 	return (
-			<div className="flex w-screen h-auto justify-center flex-col">
-				<Header/>
-				<div className="px-[24px] w-full h-auto">
-					{
-						ScreenState === "result" ? 
-						<Yomikata
-							data_list={[]}
-						/> :
-						<Input_text/>
-					}
-				</div>
+		<div className="flex w-screen h-screen flex-col bg-[url(/images/bg_image.png)] bg-cover">
+			<Header/>
+			<div className="px-[24px] w-full h-auto">
+				{
+					ScreenState === "result" ? 
+					<Yomikata
+						data_list={[]}
+					/> :
+					<Input_text/>
+				}
 			</div>
+		</div>
 	);
 }
