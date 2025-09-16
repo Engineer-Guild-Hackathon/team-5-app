@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File,HTTPException, Form,Request
+from fastapi import FastAPI, UploadFile, File,HTTPException, Form
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
@@ -37,8 +37,6 @@ async def root():
 
 @app.post("/convert/")
 async def convert(item:Item):
-    print(f"--- Received item.convert_number: {item.convert_number}")
-    print(f"--- Type of item.convert_number: {type(item.convert_number)}")
     match item.convert_number:
         case 1:
             return english_to_katakana(item.sentence)
