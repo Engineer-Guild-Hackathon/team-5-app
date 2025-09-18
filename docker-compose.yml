@@ -1,6 +1,7 @@
 services: # （１）
   db:
     image: mysql:latest # （２）
+    container_name: my_custom_mysql_name
     volumes: # （４）
       - db_data:/var/lib/mysql 
     restart: always
@@ -10,7 +11,7 @@ services: # （１）
       MYSQL_USER: user_name
       MYSQL_PASSWORD: user_password
     ports: # （７）
-      - "3000:3000"
+      - "3306:3306"
 
       
 volumes: # （５）

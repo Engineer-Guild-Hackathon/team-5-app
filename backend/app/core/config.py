@@ -14,3 +14,8 @@ load_dotenv(dotenv_path=dotenv_path)
 # これで環境変数が読み込める
 AMIVOICE_API_KEY = os.getenv("AMI_voice_APIkey")
 AMIVOICE_URL=os.getenv("AMIVOICE_URL")
+DATABASE_URL=os.getenv("DATABASE_URL")
+MYSQL_ROOT_PASSWORD=os.getenv("MYSQL_ROOT_PASSWORD")
+MYSQL_DATABASE=os.getenv("MYSQL_DATABASE")
+MYSQL_USER=os.getenv("MYSQL_USER")
+MYSQL_PASSWORD=os.getenv("MYSQL_PASSWORD")
