@@ -1,19 +1,28 @@
 
+import Image from 'next/image';
 
 export
 function Header() {
     return (
         <div
-            className="w-full h-[97px] border-b-[1px] border-[#DEE1E680] justify-center flex bg-[#00000021]"
+            className="w-full h-[97px] bg-white"
         >
             <div
                 className="
-                    my-auto w-fit h-fit
-                    text-[30px] font-[600] select-none
-                    text-[#ffffff]
+                    h-full w-[50%]
+                    relative
                 "
             >
-                フリガナLANGUAGE
+                <Image
+                    fill={true}
+                    objectFit="contain"
+                    className='
+                        h-full object-contain object-left
+                        w-[50%]
+                    '
+                    src="/images/FURIGANA_LANGUAGE.png"
+                    alt='FURIGANA LANGUAGE'
+                />
             </div>
         </div>
     );

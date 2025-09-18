@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client"
 
 import { Header } from "@/components/Header";
@@ -26,17 +25,4 @@ function Home() {
 			</div>
 		</div>
 	);
-=======
-"use client"
-
-import { Header } from "@/components/Header"
-
-export default
-function Home() {
-  return (
-    <div className="w-full h-fit">
-      <Header/>
-    </div>
-  );
->>>>>>> 81fe22eee1bfeeee364cd2f92dc4fe0d3eeeef37
 }

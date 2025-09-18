@@ -17,7 +17,7 @@ type useScreenState_type = {
 
 export
 const useScreenState = create<useScreenState_type>((set)=>({
-    ScreenState: "input",
+    ScreenState: "result",
     setScreenState: (condition:string) => set(()=>({ScreenState:condition}))
 }));
 
