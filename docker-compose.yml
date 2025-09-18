@@ -1,0 +1,17 @@
+services: # （１）
+  db:
+    image: mysql:latest # （２）
+    volumes: # （４）
+      - db_data:/var/lib/mysql 
+    restart: always
+    environment: # （６）
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: your_database
+      MYSQL_USER: user_name
+      MYSQL_PASSWORD: user_password
+    ports: # （７）
+      - "3000:3000"
+
+      
+volumes: # （５）
+    db_data:
