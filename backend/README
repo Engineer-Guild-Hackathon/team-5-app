@@ -1,0 +1,29 @@
+/backend/               # FastAPI
+    ├── /app/               # メインのアプリケーションコード
+    │   ├── /api/           # APIエンドポイントの定義 (ルーター)
+    │   │   ├── __init__.py
+    │   │   ├── __init__.py
+    │   │   ├── convert.py    # 翻訳関連のエンドポイント
+    |   |   |-- amivoice.py   #発音評価機能のエンドポイント
+    │   │   └── history.py    # 練習履歴関連のエンドポイント
+    │   │
+    │   ├── /core/          # アプリケーションのコアロジック
+    │   │   ├── __init__.py
+    │   │   └── config.py     # データベース接続情報などの設定
+    │   │
+    │   ├── /db/            # データベース関連のすべてをここに集約
+    │   │   ├── __init__.py
+    │   │   ├── database.py   # DBセッションの管理、初期化処理
+    │   │   └── models.py     # SQLModelのテーブル定義
+    │   |
+    |   |----/user/
+    |   |    |
+    |   |    |---auth.py    #ユーザー認証用の関数
+    |   |
+    │   ├── /services/      # ビジネスロジック
+    │   │   ├── __init__.py
+    │   │   └── convert.py # 翻訳処理の本体
+    │   │
+    │   └── main.py         # FastAPIアプリケーションのインスタンス化
+    │
+    └── main.py             # FastAPIの起動用ファイル (uvicorn.run)
