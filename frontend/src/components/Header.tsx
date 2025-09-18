@@ -5,12 +5,12 @@ export
 function Header() {
     return (
         <div
-            className="w-full h-[97px] bg-white"
+            className="w-full h-[10vh] bg-white flex flex-row"
         >
             <div
                 className="
                     h-full w-[50%]
-                    relative
+                    relative mr-auto
                 "
             >
                 <Image

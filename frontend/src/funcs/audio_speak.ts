@@ -8,11 +8,9 @@ class WebSpeak {
 
     constructor() {
         if("speechSynthesis" in window){
-            alert("対応");
             this.Speech = window.speechSynthesis;
             this.Utter = new SpeechSynthesisUtterance();
         }else{
-            alert("非対応");
             this.Speech = null;
             this.Utter = null;
         }
@@ -46,6 +44,7 @@ class WebSpeak {
                 set(false);
             }
             this.Utter.onerror = (ev) => {
+                console.error(ev.error);
                 set(false);
             }
             this.Utter.onpause = (ev) => {
@@ -58,6 +57,19 @@ class WebSpeak {
             }
             this.Utter.text = text;
             this.Speech.speak(this.Utter);
+        }
+    }
+
+    change_voice(lang:string){
+        if(this.Utter){
+            switch (lang) {
+                case "日本語":
+                    this.Utter.lang = "ja-JP"
+                    break;
+                case "English":
+                    this.Utter.lang = "en-US"
+                    break;
+            }
         }
     }
 }

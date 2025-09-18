@@ -1,31 +1,53 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { useResults,useScreenState, network, rec_voice } from "@/hooks/States";
-import { WebSpeak } from "@/funcs/audio_speak";
-
-const webspeak = new WebSpeak();
+import { useResults,useScreenState, network, rec_voice, webspeak } from "@/hooks/States";
 
 export
 function Yomikata() {
+
+    const results = useResults((state)=>state.Result);
+
+    const setS_state =useScreenState((state)=>state.setScreenState); 
+
     return (
         <div
             className="
-                w-full h-fit bg-[#ffffff]
-                rounded-md p-5 mt-5
-                flex flex-col gap-5 items-center
+                w-full h-[80vh] bg-[#ffffff]
+                rounded-md p-5 mt-5 flex flex-col
             "
         >
-            <Sentence_and_Yomikata
-                text="My Name is Kazuto."
-                Yomikata="ﾏｲ ﾈｲﾑ ｲｽﾞ ｶｽﾞｨｭｵｳ ﾅｲｽ ﾀ ﾐｯ ﾕ"
+            <button
+                className="
+                    w-5 h-5
+                    bg-[url(/images/back.svg)] bg-cover
+                    active:scale-[80%]
+                    mb-5
+                "
+                onClick={()=>setS_state("input")}
             />
-            <Sentence_and_Yomikata
-                text="My Name is Kazuto. Nice To meet you."
-                Yomikata="ﾏｲ ﾈｲﾑ ｲｽﾞ ｶｽﾞｨｭｵｳ ﾅｲｽ ﾀ ﾐｯ ﾕ"
+            <div
+                className="
+                    h-[60vh] overflow-y-auto flex flex-col gap-5
+                    mb-5
+                "
+            >
+                {
+                    results.map((item,idx)=>
+                        <Sentence_and_Yomikata
+                            text={item.original}
+                            Yomikata={item.convert}
+                            key={idx}
+                        />
+                    )
+                }
+            </div>
+            <div
+                className="h-auto flex-1"
             />
+            <Test/>
         </div>
     );
 }
@@ -49,7 +71,7 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
     return (
         <div
             className="
-                w-full h-fit p-2
+                w-full h-fit py-2 px-5 self-center
                 flex flex-row justify-center
                 shadow-lg rounded-2xl border-1 border-[#cacaca]
             "
@@ -68,6 +90,7 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
                                     h-fit w-fit
                                     flex flex-col items-center
                                 "
+                                key={idx}
                             >
                                 <div
                                     className="
@@ -83,7 +106,7 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
                                         text-[18px]
                                     "
                                 >
-                                    {Yomikatas[idx]}
+                                    {Yomikatas[idx+1]}
                                 </div>
                             </div>
                         );
@@ -96,10 +119,11 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
                     w-fit h-fit
                     rounded-full
                     border-1 mr-2 ml-auto self-center
+                    border-[#cacaca] active:scale-95
                 `}
                 onClick={()=>{
                     if(!Play){
-                        webspeak.Play(text, setPlay);
+                        webspeak.Play(text,setPlay);
                     }else{
                         webspeak.Stop();
                     }
@@ -112,6 +136,83 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
                     height={50}
                 />
             </button>
+        </div>
+    );
+}
+
+function Test() {
+
+    const [Rec,setRec] = useState<boolean>(false);
+    const [Score, setScore] = useState<number|null>(null);
+
+    const click_func = async () => {
+        try{
+            if(!Rec){
+                rec_voice.start_rec_voice();
+                setRec(true);
+            }else{
+                const voice_data = await rec_voice.stop_rec_voice();
+                setRec(false);
+                if(voice_data.Blob){
+                    const result = await network.get_Yomikata_score(voice_data.Blob, voice_data.type);
+                    let sum = 0
+                    result.results.forEach((item)=>{
+                        sum += item.confidence;
+                    });
+                    setScore(sum/result.results.length);
+                }
+            }
+        }catch(e){
+            setRec(false);
+            console.error(e);
+        }
+    }
+
+    return (
+        <div
+            className="
+                h-[10vh] w-full
+            "
+        >
+            <p
+                className="
+                    text-[15px]
+                "
+            >
+                Speaking Test
+            </p>
+            <div
+                className="
+                    h-auto w-full
+                    flex flex-row items-center
+                    mt-2.5
+                "
+            >
+                <button
+                    className={`
+                        rounded-full w-[40px] h-[40px]
+                        border-1 border-[#eaeaea]
+                        ml-5 active:scale-95 relative
+                    `}
+                    style={{background:Rec ? "#00ff00ff" : "#FFFFFF"}}
+                    onClick={click_func}
+                >
+                    <Image
+                        src="/images/mic.svg"
+                        alt="mic"
+                        fill={true}
+                    />
+                </button>
+                <p
+                    className="
+                        text-[30px]
+                        border-1 border-[#eaeaea]
+                        rounded-md ml-20 px-3
+                    "
+                >
+                    Score:　{Score}
+                </p>
+            </div>
         </div>
     );
 }

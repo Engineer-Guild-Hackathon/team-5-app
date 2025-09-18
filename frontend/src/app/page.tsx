@@ -13,13 +13,11 @@ function Home() {
 
 	return (
 		<div className="flex w-screen h-screen flex-col bg-[url(/images/bg_image.png)] bg-cover">
-			<Header/>
-			<div className="px-[24px] w-full h-auto">
+        	<Header/>
+			<div className="px-[24px] w-full flex-1 border-1 overflow-y-auto">
 				{
 					ScreenState === "result" ? 
-					<Yomikata
-						data_list={[]}
-					/> :
+					<Yomikata/> :
 					<Input_text/>
 				}
 			</div>

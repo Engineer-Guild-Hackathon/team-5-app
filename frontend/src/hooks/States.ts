@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import { Network, get_Yomikaka_res } from "@/funcs/network";
 import { Audio } from "@/funcs/audio_record";
+import { WebSpeak } from "@/funcs/audio_speak";
 import net_conf from "@/network.json";
 
 export 
@@ -10,6 +11,9 @@ const network = new Network(net_conf.Adress);
 export
 const rec_voice = new Audio();
 
+export
+const webspeak = new WebSpeak();
+
 type useScreenState_type = {
     ScreenState:string;
     setScreenState: (state:string)=>void;
@@ -17,7 +21,7 @@ type useScreenState_type = {
 
 export
 const useScreenState = create<useScreenState_type>((set)=>({
-    ScreenState: "result",
+    ScreenState: "input",
     setScreenState: (condition:string) => set(()=>({ScreenState:condition}))
 }));
 

@@ -1,7 +1,7 @@
 
 import { auto_height_resize } from "@/funcs/auto_resize";
 import { useRef, useState } from "react";
-import { network, useResults, useScreenState } from "@/hooks/States";
+import { network, webspeak ,useResults, useScreenState } from "@/hooks/States";
 import Image from "next/image";
 
 export
@@ -18,6 +18,7 @@ function Input_text() {
     const onclick_func = async () => {
         try{
             setScreenState("waiting");
+            webspeak.change_voice(From);
             setResult(await network.get_Yomikata(From,input_text));
             setScreenState("result");
         }catch(e){
