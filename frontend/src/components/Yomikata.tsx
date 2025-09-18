@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { useResults,useScreenState, network, rec_voice, webspeak } from "@/hooks/States";
+import { useLang } from "@/hooks/lang_conf";
 
 export
 function Yomikata() {
@@ -144,6 +145,7 @@ function Test() {
 
     const [Rec,setRec] = useState<boolean>(false);
     const [Score, setScore] = useState<number|null>(null);
+    const lang_conf = useLang((state)=>state.conf);
 
     const click_func = async () => {
         try{
@@ -155,7 +157,7 @@ function Test() {
                 setRec(false);
                 if(voice_data.Blob){
                     const result = await network.get_Yomikata_score(voice_data.Blob, voice_data.type);
-                    let sum = 0
+                    let sum = 0;
                     result.results.forEach((item)=>{
                         sum += item.confidence;
                     });
@@ -179,7 +181,7 @@ function Test() {
                     text-[15px]
                 "
             >
-                Speaking Test
+                {lang_conf.speak_test}
             </p>
             <div
                 className="
@@ -194,7 +196,7 @@ function Test() {
                         border-1 border-[#eaeaea]
                         ml-5 active:scale-95 relative
                     `}
-                    style={{background:Rec ? "#00ff00ff" : "#FFFFFF"}}
+                    style={{background:Rec ? "#00ff00" : "#FFFFFF"}}
                     onClick={click_func}
                 >
                     <Image

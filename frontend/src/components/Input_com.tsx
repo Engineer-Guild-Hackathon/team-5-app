@@ -2,6 +2,8 @@
 import { auto_height_resize } from "@/funcs/auto_resize";
 import { useRef, useState } from "react";
 import { network, webspeak ,useResults, useScreenState } from "@/hooks/States";
+import { useLang } from "@/hooks/lang_conf";
+import { Dropdown } from "@/components/Dropdown";
 import Image from "next/image";
 
 export
@@ -12,6 +14,8 @@ function Input_text() {
     const [input_text, setinput_text] = useState<string>("");
 
     const {From, To, setFrom, setTo,setResult} = useResults();
+
+    const lang_conf = useLang((state)=>state.conf); 
 
     const textarea_ref = useRef<HTMLTextAreaElement | null>(null);
 
@@ -47,7 +51,7 @@ function Input_text() {
                 <Dropdown
                     setLang={setFrom}
                     Lang={From}
-                    DropDownTitle="原文"
+                    DropDownTitle={lang_conf.Genbun}
                 />
                 <Image
                     src="/images/arrow_right.svg"
@@ -74,7 +78,7 @@ function Input_text() {
                     border-[#DEE1E6FF]
                     text-[#000000]
                 "
-                placeholder="英文を入力してください"
+                placeholder={lang_conf.init_input_text}
                 value={input_text}
                 ref={textarea_ref}
                 onInput={(textarea)=>{
@@ -100,105 +104,10 @@ function Input_text() {
                         text-[#000000]
                     "
                 >
-                    変換
+                    {lang_conf.pronu_change}
                 </div>
             </button>
         </div>
     );
 }
 
-const test_data:Array<string> = [
-    "日本語",
-    "English",
-]
-
-type Dropdown_props = {
-    setLang:(lang:string)=>void;
-    Lang:string;
-    DropDownTitle:string;
-}
-
-export
-function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
-
-    const [open, setopen] = useState<boolean>(false);
-
-    const selected_func = (lang:string) => {
-        setLang(lang);
-        setopen((before)=>!before);
-    }
-
-    return (
-        <div
-            className="
-                min-w-[110px] h-fit max-w-[180px]
-            "
-        >
-            <div
-                className="
-                    w-fit h-fit
-                    text-[13px] text-[#000000]
-                "
-            >
-                {DropDownTitle}
-            </div>
-            <div
-                className="
-                    flex flex-row items-center
-                    w-full h-[30px]
-                    text-[20px] pl-3 border-[1px]
-                    border-[#B05BAAFF] rounded-md
-                    bg-[#ffffff] text-[#000000]
-                "
-            >
-                {Lang}
-                <button
-                    className={`
-                        w-[20px] h-[20px]
-                        mr-[3px] ml-auto
-                        ${open ? "rotate-180":"rotate-0"}
-                        hover:border-1 cursor-pointer
-                    `}
-                    onClick={()=>setopen((before)=>!before)}
-                >
-                    <Image
-                        src="/images/arrow_down.svg"
-                        alt=""
-                        width={20}
-                        height={20}
-                    />
-                </button>
-            </div>
-            <div
-                className={`
-                    w-full max-h-[160px]
-                    ${open ? "h-fit":"h-0"}
-                    ${open ? "visible":"invisible"}
-                    overflow-y-scroll
-                    rounded-md border-1 border-[#dddddd]
-                    flex flex-col
-                    bg-[#FFFFFFFF]
-                `}
-            >
-                {
-                    test_data.map((item,idx)=>{
-                        return (
-                            <button
-                                className="
-                                    text-left h-fit w-full
-                                    px-3 py-1
-                                    hover:bg-[#ff82f7]
-                                    cursor-pointer
-                                "
-                                key={idx}
-                                onClick={()=>selected_func(item)}
-                            >
-                                {item}
-                            </button>
-                        );
-                    })
-                }
-            </div>
-        </div>
-    );
-}
