@@ -2,11 +2,10 @@
     ├── /app/               # メインのアプリケーションコード
     │   ├── /api/           # APIエンドポイントの定義 (ルーター)
     │   │   ├── __init__.py
-    │   │   └── endpoints/
-    │   │       ├── __init__.py
-    │   │       ├── convert.py    # 翻訳関連のエンドポイント
-    |   |       |-- amivoice.py   #発音評価機能のエンドポイント
-    │   │       └── history.py    # 練習履歴関連のエンドポイント
+    │   │   ├── __init__.py
+    │   │   ├── convert.py    # 翻訳関連のエンドポイント
+    |   |   |-- amivoice.py   #発音評価機能のエンドポイント
+    │   │   └── history.py    # 練習履歴関連のエンドポイント
     │   │
     │   ├── /core/          # アプリケーションのコアロジック
     │   │   ├── __init__.py
@@ -23,7 +22,7 @@
     |   |
     │   ├── /services/      # ビジネスロジック
     │   │   ├── __init__.py
-    │   │   └── convert_service.py # 翻訳処理の本体
+    │   │   └── convert.py # 翻訳処理の本体
     │   │
     │   └── main.py         # FastAPIアプリケーションのインスタンス化
     │

@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 import uvicorn
 import httpx
-from .api import convert,amivoice
+from .api import convert,amivoice,signup,login
 
 
 app=FastAPI()
@@ -22,5 +22,7 @@ app.add_middleware(
 
 app.include_router(convert.router)
 app.include_router(amivoice.router)
+app.include_router(login.router)
+app.include_router(signup.router)
 
 print("OK")
