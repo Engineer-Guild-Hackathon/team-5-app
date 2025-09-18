@@ -1,4 +1,8 @@
 from fastapi import FastAPI, UploadFile, File,HTTPException, Form,APIRouter
+from dotenv import load_dotenv
+import httpx
+import os
+from ..core.config import AMIVOICE_API_KEY,AMIVOICE_URL
 
 
 router = APIRouter()
