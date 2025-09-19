@@ -111,8 +111,8 @@ def english_to_korea(text: str) -> str:
             word_ipa = word_ipa.strip()
             if not word_ipa:
                 continue
-            korea_english+=" "
             korea_english+=ipa_to_korea(word_ipa)
+            korea_english+=" "
         ansewr.append({"original":t,"convert":korea_english})
     
     return ansewr
