@@ -103,7 +103,7 @@ def english_to_korea(text: str) -> str:
         if not t.strip():
             continue
         if detect(t) == "ja" or detect(t) == "ko":
-            ansewr.append({"original":t,"convert":"Please enter English"})
+            ansewr.append({"original":t,"convert":"Please　enter　English"})
             continue
         words_ipa=text_to_ipa(t)
         korea_english=""

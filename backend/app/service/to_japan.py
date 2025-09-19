@@ -106,7 +106,7 @@ def korea_to_japan(text:list[str])->str:
         if not t.strip():
             continue
         if detect(t) != "ko":
-            ansewr.append({"original":t,"convert":"한국어를 입력해 주세요"})
+            ansewr.append({"original":t,"convert":"한국어를　입력해　주세요"})
             continue
         words_ipa=text_to_ipa(t,"ko")
         katakana_korea=""
@@ -128,7 +128,7 @@ def english_to_japan(text: str) -> str:
         if not t.strip():
             continue
         if detect(t) == "ja" or detect(t) == "ko":
-            ansewr.append({"original":t,"convert":"please enter English"})
+            ansewr.append({"original":t,"convert":"please　enter　English"})
             continue
         words_ipa=text_to_ipa(t)
                # --- ▼ ここから連音化処理 ▼ ---

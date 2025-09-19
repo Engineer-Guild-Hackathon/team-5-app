@@ -115,7 +115,7 @@ def korea_to_english(text: str) -> str:
         if not t.strip():
             continue
         if detect(t) != "ko":
-            ans.append({"original":t,"convert":"한국어를 입력해 주세요"})
+            ans.append({"original":t,"convert":"한국어를　입력해　주세요"})
             continue
         words_ipa=text_to_ipa(t,"ko")
         print(words_ipa)        
