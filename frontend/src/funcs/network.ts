@@ -15,6 +15,30 @@ type get_Yomikata_score_res = {
     results:score_detail[],
 }
 
+const return_num = (from:string,to:string)=>{
+    if(from === "日本語"){
+        if(to === "English"){
+            return 3
+        }else if(to === "한국어"){
+            return 4
+        }
+    }else if(from === "한국어"){
+        if(to === "日本語"){
+            return 6
+        }else  if(to === "English"){
+            return 5
+        }
+    }else if(from === "English"){
+        if(to === "日本語"){
+            return 1
+        }else if(to === "한국어"){
+            return 2
+        }
+    }else{
+        return 0
+    }
+}
+
 export
 class Network {
     adress:string;
@@ -23,9 +47,12 @@ class Network {
         this.adress = adress;
     }
 
-    async get_Yomikata(lang: string, text:string) {
+    async get_Yomikata(from: string, to: string, text:string) {
         try{
-            const send_lang = lang === "English" ? 1 : 2 ;
+            if(from === to){
+                throw new Error("same lang");
+            }
+            const TypeofTrance = return_num(from,to);
             const res = await fetch(
                 this.adress + "convert/",
                 {
@@ -34,7 +61,7 @@ class Network {
                         "Content-Type": "application/json",
                     },
                     body:JSON.stringify({
-                        "convert_number":send_lang,
+                        "convert_number":TypeofTrance,
                         "sentence":text
                     })
                 }

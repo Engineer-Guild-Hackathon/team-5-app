@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import { Dropdown } from './Dropdown';
 import { useLang } from '@/hooks/lang_conf';
@@ -10,7 +9,7 @@ function Header() {
 
     return (
         <div
-            className="w-full h-[10vh] bg-white flex flex-row overflow-visible z-10"
+            className="w-full h-[10vh] bg-white flex flex-row overflow-visible z-10 pr-2.5"
         >
             <div
                 className="

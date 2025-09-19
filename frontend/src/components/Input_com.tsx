@@ -1,6 +1,6 @@
 
 import { auto_height_resize } from "@/funcs/auto_resize";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { network, webspeak ,useResults, useScreenState } from "@/hooks/States";
 import { useLang } from "@/hooks/lang_conf";
 import { Dropdown } from "@/components/Dropdown";
@@ -19,11 +19,20 @@ function Input_text() {
 
     const textarea_ref = useRef<HTMLTextAreaElement | null>(null);
 
+    useEffect(()=>{
+        if(To === ""){
+            setTo(lang_conf.lang);
+        }
+    },[]);
+
     const onclick_func = async () => {
         try{
             setScreenState("waiting");
             webspeak.change_voice(From);
-            setResult(await network.get_Yomikata(From,input_text));
+            if(!To){
+                throw new Error("To is null");
+            }
+            setResult(await network.get_Yomikata(From,To,input_text));
             setScreenState("result");
         }catch(e){
             console.error(e);
@@ -66,7 +75,7 @@ function Input_text() {
                 <Dropdown
                     setLang={setTo}
                     Lang={To}
-                    DropDownTitle="読み方"
+                    DropDownTitle={lang_conf.Yomikata}
                 />
             </div>
             <textarea

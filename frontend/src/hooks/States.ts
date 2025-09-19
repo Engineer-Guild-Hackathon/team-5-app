@@ -1,15 +1,17 @@
+"use client"
 
 import { create } from "zustand";
 import { Network, get_Yomikaka_res } from "@/funcs/network";
 import { Audio } from "@/funcs/audio_record";
 import { WebSpeak } from "@/funcs/audio_speak";
+import { useLang } from "./lang_conf";
 import net_conf from "@/network.json";
 
 export 
 const network = new Network(net_conf.Adress);
 
 export
-const rec_voice = new Audio();
+const rec_voice = new Audio("audio/mp4");
 
 export
 const webspeak = new WebSpeak();
@@ -38,7 +40,7 @@ type useResult_type = {
 export
 const useResults = create<useResult_type>((set)=>({
     From: "English",
-    To: "日本語",
+    To: "",
     Result: [],
     
     setFrom: (from: string) => set(()=>({From:from})),

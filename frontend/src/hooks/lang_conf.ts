@@ -1,5 +1,6 @@
 import _lang_conf from "@/gengo.json";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type lang_keys = {
     lang:string;
@@ -8,6 +9,9 @@ type lang_keys = {
     pronu_change:string;
     speak_test:string;
     lang_mode:string;
+    Yomikata:string;
+    welcome:string;
+    make_account:string;
 }
 
 export
@@ -19,14 +23,21 @@ type uselang_type = {
 }
 
 export
-const useLang = create<uselang_type>((set)=>({
-    conf:lang_conf[0],
-    setlang:(lang:string) => {
-        for(const item of lang_conf){
-            if(item.lang === lang){
-                set(()=>({conf:item}));
-                break;
+const useLang = create<uselang_type>()(
+    persist(
+        (set, get) => ({
+            conf:lang_conf[0],
+            setlang: (lang:string) => {
+                for(const item of lang_conf){
+                    if(item.lang === lang){
+                        set(()=>({conf:item}));
+                        break;
+                    }
+                }
             }
+        }),
+        {
+            name:"Lang_conf"
         }
-    }
-}));
+    )
+);

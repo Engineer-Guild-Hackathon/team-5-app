@@ -1,3 +1,4 @@
+"use client"
 
 export
 class WebSpeak {
@@ -7,7 +8,7 @@ class WebSpeak {
     Pause: boolean = false;
 
     constructor() {
-        if("speechSynthesis" in window){
+        if(typeof window !== "undefined" && "speechSynthesis" in window){
             this.Speech = window.speechSynthesis;
             this.Utter = new SpeechSynthesisUtterance();
         }else{
@@ -68,6 +69,9 @@ class WebSpeak {
                     break;
                 case "English":
                     this.Utter.lang = "en-US"
+                    break;
+                case "한국어":
+                    this.Utter.lang = "ko-KR"
                     break;
             }
         }

@@ -107,7 +107,7 @@ function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
                                         text-[18px]
                                     "
                                 >
-                                    {Yomikatas[idx+1]}
+                                    {Yomikatas[idx]}
                                 </div>
                             </div>
                         );
@@ -152,6 +152,7 @@ function Test() {
             if(!Rec){
                 rec_voice.start_rec_voice();
                 setRec(true);
+                setScore(null);
             }else{
                 const voice_data = await rec_voice.stop_rec_voice();
                 setRec(false);

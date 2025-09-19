@@ -2,25 +2,34 @@
     {
         "lang":"日本語",
         "Genbun":"原文",
+        "Yomikata":"読み方",
         "init_input_text":"文を入力してください",
         "pronu_change":"変換",
         "speak_test":"スピーキングテスト",
-        "lang_mode":"言語モード"
+        "lang_mode":"言語モード",
+        "welcome":"ようこそ",
+        "make_account":"新しくアカウントを作る"
     },
     {
         "lang":"English",
         "Genbun":"original",
+        "Yomikata":"Pronunciation",
         "init_input_text":"Please enter the sentence",
         "pronu_change":"Pronunciation Change",
         "speak_test":"Speaking Test",
-        "lang_mode":"Language Mode"
+        "lang_mode":"Language Mode",
+        "welcome":"Welcome",
+        "make_account":"create a new account"
     },
     {
         "lang":"한국어",
         "Genbun":"원문",
+        "Yomikata":"읽는 법",
         "init_input_text":"문장을 입력하세요.",
         "pronu_change":"발음 변환",
         "speak_test":"발음 테스트",
-        "lang_mode":"언어 모드"
+        "lang_mode":"언어 모드",
+        "welcome":"환영합니다",
+        "make_account":"새 계정 만들기"
     }
 ]
