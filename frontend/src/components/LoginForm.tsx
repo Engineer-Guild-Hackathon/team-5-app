@@ -33,7 +33,7 @@ function Login_Form() {
             </p>
             <FormInput
                 title="Email"
-                setText={(text:string)=>{void}}
+                setText={(text:string)=>{}}
                 password={false}
                 className="
                     
