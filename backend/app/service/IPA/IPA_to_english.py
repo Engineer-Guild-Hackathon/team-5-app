@@ -9,10 +9,10 @@ IPA_TO_EN = {
     'a': 'aa',   # father
     'ə': 'ae',   # about (schwa)
     'ʌ': 'u',   # cut
-    'e': 'ee',
+    'e': 'ey',
     'ɛ': 'e',   # met
-    'i': 'ey',
-    'ɪ': 'ey',   # fit
+    'i': 'ee',
+    'ɪ': 'ee',   # fit
     'iː': 'ey',  # see
     'o': 'oh',
     'ɔ': 'o',   # caught
