@@ -15,9 +15,9 @@ class Item(BaseModel):
     convert_number:int
     sentence:str
 
-@router.get("/")
-async def hello():
-    return {"message":"hello hurigana"}
+# @router.get("/")
+# async def hello():
+#     return {"message":"hello hurigana"}
 
 @router.post("/convert/")
 async def convert(item:Item,Id:str=None,db: Session = Depends(get_db)):

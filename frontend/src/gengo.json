@@ -8,7 +8,15 @@
         "speak_test":"スピーキングテスト",
         "lang_mode":"言語モード",
         "welcome":"ようこそ",
-        "make_account":"新しくアカウントを作る"
+        "make_account":"新しくアカウントを作る",
+        "Ohayo":"おはよう",
+        "Okaeri":"お帰り！",
+        "Touroku":"登録",
+        "GoMyPage":"MyPageへ",
+        "GoLogin":"Loginする",
+        "ReinputPass":"パスワードをもう一度入力してください。",
+        "CantLogin":"ログインできませんでした。",
+        "CantSignin":"サインインできませんでした。"
     },
     {
         "lang":"English",
@@ -19,7 +27,15 @@
         "speak_test":"Speaking Test",
         "lang_mode":"Language Mode",
         "welcome":"Welcome",
-        "make_account":"create a new account"
+        "make_account":"create a new account",
+        "Ohayo":"Good Morning",
+        "Okaeri":"Welcome Back!",
+        "Touroku":"register",
+        "GoMyPage":"Go to MyPage",
+        "GoLogin":"Log in",
+        "ReinputPass":"Please enter your password again.",
+        "CantLogin":"Unable to log in.",
+        "CantSignin":"Could not sign in."
     },
     {
         "lang":"한국어",
@@ -30,6 +46,14 @@
         "speak_test":"발음 테스트",
         "lang_mode":"언어 모드",
         "welcome":"환영합니다",
-        "make_account":"새 계정 만들기"
+        "make_account":"새 계정 만들기",
+        "Ohayo":"좋은 아침",
+        "Okaeri":"귀가！",
+        "Touroku":"등록하다",
+        "GoMyPage":"MyPage로",
+        "GoLogin":"로그인",
+        "ReinputPass":"비밀번호를 다시 입력합니다.",
+        "CantLogin":"로그인할 수 없습니다.",
+        "CantSignin":"로그인할 수 없습니다."
     }
 ]

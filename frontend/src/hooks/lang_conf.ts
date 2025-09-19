@@ -12,6 +12,14 @@ type lang_keys = {
     Yomikata:string;
     welcome:string;
     make_account:string;
+    Ohayo:string;
+    Okaeri:string;
+    Touroku:string;
+    GoMyPage:string;
+    GoLogin:string;
+    ReinputPass:string;
+    CantLogin:string;
+    CantSignin:string;
 }
 
 export
@@ -20,6 +28,7 @@ const lang_conf:lang_keys[] = _lang_conf;
 type uselang_type = {
     conf:lang_keys;
     setlang: (lang:string)=>void;
+    
 }
 
 export
@@ -37,7 +46,10 @@ const useLang = create<uselang_type>()(
             }
         }),
         {
-            name:"Lang_conf"
+            name:"Lang_conf",
+            onRehydrateStorage: (state)=>{
+                console.log(state.conf.lang);
+            }
         }
     )
 );

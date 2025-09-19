@@ -11,7 +11,14 @@ function Yomikata() {
 
     const results = useResults((state)=>state.Result);
 
-    const setS_state =useScreenState((state)=>state.setScreenState); 
+    const setS_state =useScreenState((state)=>state.setScreenState);
+
+    const setflag = useResults((state)=>state.setLog_flag);
+    const flag = useResults((state)=>state.Log_flag);
+
+    useEffect(()=>{
+
+    },[]);
 
     return (
         <div
@@ -27,7 +34,14 @@ function Yomikata() {
                     active:scale-[80%]
                     mb-5
                 "
-                onClick={()=>setS_state("input")}
+                onClick={()=>{
+                    if(flag){
+                        setflag(false);
+                        window.location.href = "/mypage";
+                    }else{
+                        setS_state("input");
+                    }
+                }}
             />
             <div
                 className="

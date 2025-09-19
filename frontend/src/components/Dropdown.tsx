@@ -6,10 +6,11 @@ type Dropdown_props = {
     setLang:(lang:string)=>void;
     Lang:string;
     DropDownTitle:string;
+    className?:string | null;
 }
 
 export
-function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
+function Dropdown({Lang, setLang, DropDownTitle,className = null}:Dropdown_props) {
 
     const [open, setopen] = useState<boolean>(false);
 
@@ -20,9 +21,10 @@ function Dropdown({Lang, setLang, DropDownTitle}:Dropdown_props) {
 
     return (
         <div
-            className="
+            className={`
                 min-w-[110px] h-fit max-w-[180px]
-            "
+                ${className}
+            `}
         >
             <div
                 className="

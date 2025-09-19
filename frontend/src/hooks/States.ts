@@ -1,6 +1,7 @@
 "use client"
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { Network, get_Yomikaka_res } from "@/funcs/network";
 import { Audio } from "@/funcs/audio_record";
 import { WebSpeak } from "@/funcs/audio_speak";
@@ -31,19 +32,29 @@ type useResult_type = {
     From:string;
     To:string;
     Result: Array<get_Yomikaka_res>;
+    Log_flag:boolean;
 
     setFrom: (from:string) => void;
     setTo: (to:string) => void;
     setResult: (result: Array<get_Yomikaka_res>) => void;
+    setLog_flag: (flag:boolean) => void;
 }
 
 export
-const useResults = create<useResult_type>((set)=>({
-    From: "English",
-    To: "",
-    Result: [],
-    
-    setFrom: (from: string) => set(()=>({From:from})),
-    setTo: (to:string) => set(()=>({To:to})),
-    setResult: (result: Array<get_Yomikaka_res>) => set(()=>({Result:result}))
-}));
+const useResults = create<useResult_type>()(
+    persist(
+        (set)=>({
+            From:"English",
+            To:"日本語",
+            Result:[],
+            Log_flag:false,
+
+            setFrom:(from:string)=>set(()=>({From:from})),
+            setTo:(to:string)=>set(()=>({To:to})),
+            setResult:(result:get_Yomikaka_res[])=>set(()=>({Result:result})),
+            setLog_flag:(flag:boolean)=>set(()=>({Log_flag:flag}))
+        }),{
+            name:"YomikataResult"
+        }
+    )
+);

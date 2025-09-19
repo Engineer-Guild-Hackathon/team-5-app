@@ -5,6 +5,7 @@ import { network, webspeak ,useResults, useScreenState } from "@/hooks/States";
 import { useLang } from "@/hooks/lang_conf";
 import { Dropdown } from "@/components/Dropdown";
 import Image from "next/image";
+import { useUserID } from "@/hooks/Account";
 
 export
 function Input_text() {
@@ -16,6 +17,8 @@ function Input_text() {
     const {From, To, setFrom, setTo,setResult} = useResults();
 
     const lang_conf = useLang((state)=>state.conf); 
+
+    const UseID = useUserID((state)=>state.ID);
 
     const textarea_ref = useRef<HTMLTextAreaElement | null>(null);
 
@@ -32,7 +35,7 @@ function Input_text() {
             if(!To){
                 throw new Error("To is null");
             }
-            setResult(await network.get_Yomikata(From,To,input_text));
+            setResult(await network.get_Yomikata(From,To,input_text,UseID));
             setScreenState("result");
         }catch(e){
             console.error(e);

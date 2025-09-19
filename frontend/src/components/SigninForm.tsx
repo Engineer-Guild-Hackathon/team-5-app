@@ -1,39 +1,34 @@
 import { useLang } from "@/hooks/lang_conf";
-import { useState } from "react";
 import { FormInput } from "./FormInput";
-import { useUserID } from "@/hooks/Account";
+import { useState } from "react";
 import { network } from "@/hooks/States";
-import { lang_conf } from "@/hooks/lang_conf";
+import { useUserID } from "@/hooks/Account";
 
 export
-function Login_Form() {
+function SigninForm() {
 
     const lang_conf = useLang((state)=>state.conf);
 
-    const [UserName, setUserName] = useState<string>("");
-    const [Password, setPassword] = useState<string>("");
-    const {ID,setID} = useUserID();
+    const setID = useUserID((state)=>state.setID);
 
-    const onLogin = async () => {
+    const [UserName,setUserName] = useState<string>("");
+    const [Email,setEmail] = useState<string>("");
+    const [Password,setPassword] = useState<string>("");
+    const [ConPassword,setConPassword] = useState<string>("");
+
+    const onSignin = async () => {
         try{
-            const id = await network.send_login(UserName, Password);
-            setID(id);
-            await new Promise<void>((resolve,reject)=>{
-                try{
-                    const inter = setInterval(() => {
-                        if(ID){
-                            console.log(ID);
-                            clearInterval(inter);
-                            resolve();
-                        }
-                    }, 100);
-                }catch(e){
-                    reject(e);
-                }
-            });
+            if(Password !== ConPassword){
+                alert(lang_conf.ReinputPass);
+                return;
+            }
+            const result = await network.send_signin(
+                UserName, Email, Password
+            );
+            setID(result);
             window.location.href = "/mypage";
         }catch(e){
-            alert(lang_conf.CantLogin);
+            alert(lang_conf.CantSignin);
         }
     }
 
@@ -53,21 +48,21 @@ function Login_Form() {
                     bg-clip-text text-transparent
                 "
             >
-                {lang_conf.Ohayo}
+                {lang_conf.welcome}
             </p>
             <p
                 className="
                     text-[20px] ml-2
                 "
             >
-                {lang_conf.Okaeri}
+                {lang_conf.make_account}
             </p>
             <div
                 className="
                     flex flex-col h-fit
                     mt-5 p-5
                     border-1 border-[#eaeaea]
-                    shadow-2xl rounded-2xl gap-5
+                    shadow-2xl rounded-2xl gap-3
                 "
             >
                 <FormInput
@@ -79,8 +74,24 @@ function Login_Form() {
                     "
                 />
                 <FormInput
+                    title="Email"
+                    setText={setEmail}
+                    password={false}
+                    className="
+                        self-center min-w-[70px] w-[60vw]
+                    "
+                />
+                <FormInput
                     title="Password"
                     setText={setPassword}
+                    password={true}
+                    className="
+                        self-center min-w-[70px] w-[60vw]
+                    "
+                />
+                <FormInput
+                    title="Confirm Password"
+                    setText={setConPassword}
                     password={true}
                     className="
                         self-center min-w-[70px] w-[60vw]
@@ -96,21 +107,21 @@ function Login_Form() {
                     rounded-md cursor-pointer
                     active:scale-95
                 "
-                onClick={onLogin}
+                onClick={onSignin}
             >
-                {lang_conf.GoMyPage}
+                {lang_conf.Touroku}
             </button>
             <a
-                href="/signin"
+                href="/Login"
                 className="
-                    w-fit h-fit ml-2 mt-2
+                    w-fit h-fit ml-2
                     text-[18px]
                     hover:text-blue-300
                     hover:border-blue-300
                     hover:border-b-1
                 "
             >
-                {lang_conf.make_account}
+                {lang_conf.GoLogin}
             </a>
         </div>
     );
