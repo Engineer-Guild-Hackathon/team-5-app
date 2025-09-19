@@ -1,10 +1,14 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlmodel import Session
 from ..db.database import get_db
+from ..crud.access_db import create_user
+from ..core.security import get_password_hash 
 
 router = APIRouter()
 
-@route.post("/signup/")
-async def signup(db: Session = Depends(get_db),email:str,user_name:str,passward:str):
-    return create_user(email,user_name,passward)
+@router.post("/signup/")
+async def signup(email:str,user_name:str,passward:str,db: Session = Depends(get_db),):
+    hashed_password=get_password_hash(passward)
+    return create_user(email=email,username=user_name,hashed_password=hashed_password,db=db)
+

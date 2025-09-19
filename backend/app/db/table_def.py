@@ -12,6 +12,6 @@ class User_log(SQLModel,table=True):
     translated:str = Field(nullable=False)
 
 class User_score_log(SQLModel,table=True):
-    Id:str = Field(nullable=False,unique=True,primary_key=True,foreign_key="user_table.id")
+    Id:str = Field(nullable=False,unique=True,primary_key=True,foreign_key="user_table.Id")
     original:str = Field(nullable=False)
     score:int = Field(nullable=False)

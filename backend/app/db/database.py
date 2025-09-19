@@ -3,7 +3,7 @@ from .table_def import User_table,User_log
 
 user="user_name"
 password="user_password"
-url="db"
+url="192.168.0.176"
 port="3306"
 dbname="your_database"
 
