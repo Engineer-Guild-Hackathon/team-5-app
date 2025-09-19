@@ -4,6 +4,8 @@ from ..schemas.user_schema import UserCreate
 import uuid
 from ..core.security import get_password_hash ,verify_password
 from fastapi import HTTPException, status
+from sqlalchemy.dialects.mysql import JSON
+import json
 
 def get_user_by_username(db: Session, username: str) -> User_table | None:
     statement = select(User_table).where(User_table.UserName == username)
@@ -55,3 +57,24 @@ def create_user(db: Session,username:str,email:str, hashed_password: str):
     db.commit()
     db.refresh(db_user)
     return user_id
+
+def register_log(db:Session,Id:str,sentence:str,base_language:str,translated_language:str):
+    user_log=User_log(
+        Id=Id,
+        translated_sentence=sentence,
+        base_language=base_language,
+        translated_language=translated_language
+    )
+    db.add(user_log)
+    db.commit()
+    db.refresh(user_log)
+
+"""class User_log(SQLModel, table=True):
+    Id: str = Field(foreign_key="user_table.Id")
+    translated_sentence: Dict[str, Any] = Field(sa_column=Column(JSON), nullable=False)
+    base_language: str = Field(nullable=False)
+    translated_language: str = Field(nullable=False)"""
+
+def response_log(db:Session,Id:str):
+    statement = select(User_log).where(User_log.Id == Id)
+    return db.exec(statement).all()
