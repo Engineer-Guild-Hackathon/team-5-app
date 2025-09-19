@@ -13,20 +13,22 @@ IPA_TO_EN = {
     'ɛ': 'e',   # met
     'i': 'ee',
     'ɪ': 'ee',   # fit
-    'iː': 'ey',  # see
+    'iː': 'ee',  # see
     'o': 'oh',
     'ɔ': 'o',   # caught
     'u': 'uu',
+    'ũ':'n',
     'ʊ': 'uu',  # book
     'uː': 'uu',  # blue
     'ɚ': 'er',  # teacher
     'ɝ': 'ur',  # bird
     'ɜː': 'ur',  # bird
     'ɐ': 'u',
+    'ɽ':'r',
     'ɑː': 'aa',  # father
     'ɯ': 'u',
     'q': 'q',
-    "ɕ":"u",
+    "ɕ":"sy",
     # IPA : English Spelling (Approximation)
     'b': 'b', 'd': 'd', 'f': 'f', 'ɡ': 'g', 'h': 'w', 'k': 'k',
     'l': 'l', 'm': 'm', 'n': 'n', 'p': 'p', 's': 's', 't': 't',

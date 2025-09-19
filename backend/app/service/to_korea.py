@@ -111,8 +111,8 @@ def english_to_korea(text: str) -> str:
             word_ipa = word_ipa.strip()
             if not word_ipa:
                 continue
-            korea_english+=" "
             korea_english+=ipa_to_korea(word_ipa)
+            korea_english+=" "
         ansewr.append({"original":t,"convert":korea_english})
     
     return ansewr
@@ -125,7 +125,7 @@ def japan_to_korea(text:str)->str:
     for t in text_split:
         if not t.strip():
             continue
-        if detect(t) != "ja":
+        if detect(t) == "en" or detect(t) == "ko" :
             ansewr.append({"original":t,"convert":"日本語を入力してね"})
             continue
         t_1=kanji_conv.to_hiragana(t)
