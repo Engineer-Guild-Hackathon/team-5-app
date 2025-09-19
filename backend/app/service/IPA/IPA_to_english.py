@@ -5,30 +5,30 @@
 # 母音
 IPA_TO_EN = {
     # IPA : English Spelling (Approximation)
-    'æ': 'a',   # cat
-    'a': 'a',   # father
-    'ə': 'a',   # about (schwa)
+    'æ': 'aa',   # cat
+    'a': 'aa',   # father
+    'ə': 'ae',   # about (schwa)
     'ʌ': 'u',   # cut
-    'e': 'e',
+    'e': 'ee',
     'ɛ': 'e',   # met
     'i': 'ey',
     'ɪ': 'ey',   # fit
-    'iː': 'ee',  # see
+    'iː': 'ey',  # see
     'o': 'oh',
     'ɔ': 'o',   # caught
-    'u': 'oo',
-    'ʊ': 'oo',  # book
-    'uː': 'oo',  # blue
+    'u': 'uu',
+    'ʊ': 'uu',  # book
+    'uː': 'uu',  # blue
     'ɚ': 'er',  # teacher
     'ɝ': 'ur',  # bird
     'ɜː': 'ur',  # bird
     'ɐ': 'u',
-    'ɑː': 'a',  # father
+    'ɑː': 'aa',  # father
     'ɯ': 'u',
     'q': 'q',
     "ɕ":"u",
     # IPA : English Spelling (Approximation)
-    'b': 'b', 'd': 'd', 'f': 'f', 'ɡ': 'g', 'h': 'h', 'k': 'k',
+    'b': 'b', 'd': 'd', 'f': 'f', 'ɡ': 'g', 'h': 'w', 'k': 'k',
     'l': 'l', 'm': 'm', 'n': 'n', 'p': 'p', 's': 's', 't': 't',
     'v': 'v', 'w': 'w', 'j': 'y', 'z': 'z', 'ʃ': 'sh', 'θ': 'th',
     'ð': 'th', 'ŋ': 'ng', 'ɹ': 'r', 'tʃ': 'ch', 'dʒ': 'j', 'ʒ': 's',
@@ -39,7 +39,7 @@ IPA_TO_EN = {
     'eɪ': 'ay',   # say, day
     'oʊ': 'o',    # boat, go
     'ɔɪ': 'oy',    # boy, toy
-    "ä":"aau",
+    "ä":"aa",
     "ɯᵝ":"uu",
     "e̞":"ey",
     "o̞":"ou",
