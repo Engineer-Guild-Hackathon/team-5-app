@@ -3,8 +3,8 @@ from phonemizer.backend import EspeakBackend
 from phonemizer.phonemize import phonemize
 from phonemizer.separator import Separator
 import json
-from IPA.IPA_to_korea import VOWELS_IPA_TO_KR,CONSONANTS_IPA_TO_KR,DIPHTHONGS_IPA_TO_KR,COMBINATIONS_IPA_TO_KR
-from to_IPA import text_to_ipa
+from .IPA.IPA_to_korea import VOWELS_IPA_TO_KR,CONSONANTS_IPA_TO_KR,DIPHTHONGS_IPA_TO_KR,COMBINATIONS_IPA_TO_KR
+from .to_IPA import text_to_ipa
 from kanjiconv import KanjiConv
 import kanjiconv
 

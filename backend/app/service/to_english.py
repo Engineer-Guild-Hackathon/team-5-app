@@ -3,9 +3,9 @@ from phonemizer.backend import EspeakBackend
 from phonemizer.phonemize import phonemize
 from phonemizer.separator import Separator
 import json
-from IPA.IPA_to_english import IPA_TO_EN
+from .IPA.IPA_to_english import IPA_TO_EN
 from kanjiconv import KanjiConv
-from to_IPA import text_to_ipa
+from .to_IPA import text_to_ipa
 import kanjiconv
 
 

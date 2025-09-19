@@ -26,7 +26,7 @@ IPA_TO_EN = {
     'ɑː': 'a',  # father
     'ɯ': 'u',
     'q': 'q',
-    "ɕ":"u"
+    "ɕ":"u",
     # IPA : English Spelling (Approximation)
     'b': 'b', 'd': 'd', 'f': 'f', 'ɡ': 'g', 'h': 'h', 'k': 'k',
     'l': 'l', 'm': 'm', 'n': 'n', 'p': 'p', 's': 's', 't': 't',

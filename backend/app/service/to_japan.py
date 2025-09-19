@@ -4,8 +4,8 @@ from phonemizer.phonemize import phonemize
 from phonemizer.separator import Separator
 import json
 
-from IPA.IPA_to_japan import KANA_VOWEL_MAP,VOWELS,CONSONANTS,COMBINATIONS,DIPHTHONGS,PHRASEBOOK
-from to_IPA import text_to_ipa
+from .IPA.IPA_to_japan import KANA_VOWEL_MAP,VOWELS,CONSONANTS,COMBINATIONS,DIPHTHONGS,PHRASEBOOK
+from .to_IPA import text_to_ipa
 
 
 
