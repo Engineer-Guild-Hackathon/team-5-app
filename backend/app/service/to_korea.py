@@ -7,7 +7,7 @@ from .IPA.IPA_to_korea import VOWELS_IPA_TO_KR,CONSONANTS_IPA_TO_KR,DIPHTHONGS_I
 from .to_IPA import text_to_ipa
 from kanjiconv import KanjiConv
 import kanjiconv
-
+from langdetect import detect
 all_phonemes = list(VOWELS_IPA_TO_KR.keys()) + list(CONSONANTS_IPA_TO_KR.keys()) + list(DIPHTHONGS_IPA_TO_KR.keys()) + list(COMBINATIONS_IPA_TO_KR.keys()) + [':']
 unique_phonemes = sorted(list(set(all_phonemes)), key=len, reverse=True)
 phoneme_pattern = re.compile('|'.join(re.escape(p) for p in unique_phonemes))
@@ -102,6 +102,9 @@ def english_to_korea(text: str) -> str:
     for t in text_split:
         if not t.strip():
             continue
+        if detect(t) == "ja" or detect(t) == "ko":
+            ansewr.append({"original":t,"convert":"Please enter English"})
+            continue
         words_ipa=text_to_ipa(t)
         korea_english=""
         for word_ipa in words_ipa:
@@ -121,6 +124,9 @@ def japan_to_korea(text:str)->str:
     
     for t in text_split:
         if not t.strip():
+            continue
+        if detect(t) != "ja":
+            ansewr.append({"original":t,"convert":"日本語を入力してね"})
             continue
         t_1=kanji_conv.to_hiragana(t)
         t_2=tokenize_japanese_simple(t)

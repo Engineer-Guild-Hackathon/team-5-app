@@ -7,6 +7,7 @@ from .IPA.IPA_to_english import IPA_TO_EN
 from kanjiconv import KanjiConv
 from .to_IPA import text_to_ipa
 import kanjiconv
+from langdetect import detect
 
 
 
@@ -88,6 +89,9 @@ def japan_to_english(text: str) -> str:
     for t in text_split:
         if not t.strip():
             continue
+        if detect(t) != "ja":
+            ans.append({"original":t,"convert":"日本語を入力してね"})
+            continue
         t_1=kanji_conv.to_hiragana(t)
         t_2=tokenize_japanese_simple(t)
         t_3=" ".join(t_2)
@@ -109,6 +113,9 @@ def korea_to_english(text: str) -> str:
     ans=[]
     for t in text_split:
         if not t.strip():
+            continue
+        if detect(t) != "ko":
+            ans.append({"original":t,"convert":"한국어를 입력해 주세요"})
             continue
         words_ipa=text_to_ipa(t,"ko")
         print(words_ipa)        

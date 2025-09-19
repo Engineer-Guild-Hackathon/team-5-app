@@ -6,6 +6,7 @@ import json
 
 from .IPA.IPA_to_japan import KANA_VOWEL_MAP,VOWELS,CONSONANTS,COMBINATIONS,DIPHTHONGS,PHRASEBOOK
 from .to_IPA import text_to_ipa
+from langdetect import detect
 
 
 
@@ -104,6 +105,9 @@ def korea_to_japan(text:list[str])->str:
     for t in text_split:
         if not t.strip():
             continue
+        if detect(t) != "ko":
+            ansewr.append({"original":t,"convert":"한국어를 입력해 주세요"})
+            continue
         words_ipa=text_to_ipa(t,"ko")
         katakana_korea=""
         for word_ipa in words_ipa:
@@ -122,6 +126,9 @@ def english_to_japan(text: str) -> str:
     
     for t in text_split:
         if not t.strip():
+            continue
+        if detect(t) == "ja" or detect(t) == "ko":
+            ansewr.append({"original":t,"convert":"please enter English"})
             continue
         words_ipa=text_to_ipa(t)
                # --- ▼ ここから連音化処理 ▼ ---
