@@ -51,5 +51,6 @@ async def convert(item:Item,Id:str=None,db: Session = Depends(get_db)):
                 status_code=400,
                 detail="無効な番号です。convert_numberには1か2を指定してください。"
             )
-    register_log(Id=Id,sentence=json.dumps(ans,ensure_ascii=False),base_language=base,translated_language=translated,db=db)
+    if Id:
+        register_log(Id=Id,sentence=json.dumps(ans,ensure_ascii=False),base_language=base,translated_language=translated,db=db)
     return ans
