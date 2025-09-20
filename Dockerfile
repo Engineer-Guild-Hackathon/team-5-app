@@ -11,9 +11,10 @@ RUN python3 -m venv .env
 RUN . /opt/.env/bin/activate \
     && pip install fastapi==0.116.1 \
     && pip install sqlmodel==0.0.24 \
-    && pip install uvicorn==0.35.0
-    # && pip install phonemizer==3.3.0 \
-    # && pip install pyopenjtalk==0.4.1 \
+    && pip install uvicorn==0.35.0 \
+    && pip install phonemizer==3.3.0 \
+    && pip install httpx \
+    && pip install kanjiconv 
 
 RUN echo "source /opt/.env/bin/activate && cd /team-5-app" >> /root/.bashrc
 

@@ -1,19 +1,93 @@
-
+import Image from 'next/image';
+import { Dropdown } from './Dropdown';
+import { useLang } from '@/hooks/lang_conf';
+import { useUserID } from '@/hooks/Account';
+import { useResults } from '@/hooks/States';
 
 export
 function Header() {
+
+    const {conf, setlang} = useLang();
+
+    const UserID = useUserID((state)=>state.ID);
+
+    const setflag = useResults((state)=>state.setLog_flag);
+
     return (
         <div
-            className="w-full h-[97px] border-b-[1px] border-[#DEE1E680] justify-center flex bg-[#00000021]"
+            className="w-full min-h-[100px] h-[15vh] bg-white flex flex-row overflow-visible z-10 pr-5"
         >
             <div
                 className="
-                    my-auto w-fit h-fit
-                    text-[30px] font-[600] select-none
-                    text-[#ffffff]
+                    h-full w-[50%]
+                    relative mr-auto
                 "
             >
-                フリガナLANGUAGE
+                <Image
+                    fill={true}
+                    objectFit="contain"
+                    className='
+                        h-full object-contain object-left
+                        w-[50%] cursor-pointer
+                    '
+                    src="/images/FURIGANA_LANGUAGE.png"
+                    alt='FURIGANA LANGUAGE'
+                    onClick={()=>{
+                        setflag(false);
+                        window.location.href = "/";
+                    }}
+                    unoptimized={true}
+                />
+            </div>
+            <div
+                className='
+                    w-fit h-full
+                    flex flex-col
+                    items-center
+                '
+            >
+                <div className='mt-3'>
+                    {
+                        UserID ? 
+                        <div>
+                            <a href='/mypage'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
+                                MyPage
+                            </a>
+                        </div> :
+                        <div>
+                            <a href='/Login'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
+                                Login
+                            </a>/
+                            <a href='/signin'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
+                                signin
+                            </a>
+                        </div>
+                    }
+                </div>
+                <Dropdown
+                    Lang={conf.lang}
+                    setLang={setlang}
+                    DropDownTitle="Language Mode"
+                    className="mt-2"
+                />
             </div>
         </div>
     );

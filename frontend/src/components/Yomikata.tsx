@@ -1,183 +1,233 @@
-import React, { useState } from "react";
+"use client"
+
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { useResults,useScreenState, network, rec_voice } from "@/hooks/States";
+import { useResults,useScreenState, network, rec_voice, webspeak } from "@/hooks/States";
+import { useLang } from "@/hooks/lang_conf";
 
 export
 function Yomikata() {
 
     const results = useResults((state)=>state.Result);
-    const to = useResults((state)=>state.To);
-    const from = useResults((state)=>state.From);
-    const setScreenState = useScreenState((state)=>state.setScreenState);
 
-    const [speaking, setspeaking] = useState<boolean>(false);
+    const setS_state =useScreenState((state)=>state.setScreenState);
 
-    const [speak_score, setspeak_score] = useState<number|null>(null);
+    const setflag = useResults((state)=>state.setLog_flag);
+    const flag = useResults((state)=>state.Log_flag);
 
-    const onclick_func = async () => {
+    return (
+        <div
+            className="
+                w-full h-[80vh] bg-[#ffffff]
+                rounded-md p-5 mt-5 flex flex-col
+            "
+        >
+            <button
+                className="
+                    w-5 h-5
+                    bg-[url(/images/back.svg)] bg-cover
+                    active:scale-[80%]
+                    mb-5
+                "
+                onClick={()=>{
+                    if(flag){
+                        setflag(false);
+                        window.location.href = "/mypage";
+                    }else{
+                        setS_state("input");
+                    }
+                }}
+            />
+            <div
+                className="
+                    h-[60vh] overflow-y-auto flex flex-col gap-5
+                    mb-5
+                "
+            >
+                {
+                    results.map((item,idx)=>
+                        <Sentence_and_Yomikata
+                            text={item.original}
+                            Yomikata={item.convert}
+                            key={idx}
+                        />
+                    )
+                }
+            </div>
+            <div
+                className="h-auto flex-1"
+            />
+            <Test/>
+        </div>
+    );
+}
+
+type Sentence_and_Yomikata_Props = {
+    text: string;
+    Yomikata: string;
+}
+
+function Sentence_and_Yomikata({text, Yomikata}:Sentence_and_Yomikata_Props) {
+
+    const [Play, setPlay] = useState<boolean>(false);
+    const [Texts, setTexts] = useState<string[]>([]);
+    const [Yomikatas, setYomikatas] = useState<string[]>([]);
+
+    useEffect(()=>{
+        setTexts(text.split(" "));
+        setYomikatas(Yomikata.split(" "));
+    },[text, Yomikata])
+
+    return (
+        <div
+            className="
+                w-full h-fit py-2 px-5 self-center
+                flex flex-row justify-center
+                shadow-lg rounded-2xl border-1 border-[#cacaca]
+            "
+        >
+            <div
+                className="
+                    flex flex-row flex-wrap
+                    gap-2 mr-[2px]
+                "
+            >
+                {
+                    Texts.map((word,idx)=>{
+                        return (
+                            <div
+                                className="
+                                    h-fit w-fit
+                                    flex flex-col items-center
+                                "
+                                key={idx}
+                            >
+                                <div
+                                    className="
+                                        h-fit w-fit
+                                        text-[20px]
+                                    "
+                                >
+                                    {word}
+                                </div>
+                                <div
+                                    className="
+                                        h-fit w-fit
+                                        text-[18px]
+                                    "
+                                >
+                                    {Yomikatas[idx]}
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+            <button
+                className={`
+                    min-w-[50px] min-h-[50px]
+                    w-fit h-fit
+                    rounded-full
+                    border-1 mr-2 ml-auto self-center
+                    border-[#cacaca] active:scale-95
+                `}
+                onClick={()=>{
+                    if(!Play){
+                        webspeak.Play(text,setPlay);
+                    }else{
+                        webspeak.Stop();
+                    }
+                }}
+            >
+                <Image
+                    src={`/images/${Play ? "on" : "off"}_speaker.svg`}
+                    alt={Play ? "on Play" : "off Play"}
+                    width={50}
+                    height={50}
+                />
+            </button>
+        </div>
+    );
+}
+
+function Test() {
+
+    const [Rec,setRec] = useState<boolean>(false);
+    const [Score, setScore] = useState<number|null>(null);
+    const lang_conf = useLang((state)=>state.conf);
+    const From = useResults((state)=>state.From);
+
+    const click_func = async () => {
         try{
-            if(!rec_voice.isRec){
-                setspeaking(true);
+            if(!Rec){
                 await rec_voice.start_rec_voice();
+                setRec(true);
+                setScore(null);
             }else{
-                const data =  await rec_voice.stop_rec_voice();
-                if(!data.Blob) throw new Error("can't get data");
-                else{
-                    const result_data = await network.get_Yomikata_score(data.Blob, data.type);
-                    let sum:number = 0;
-                    result_data.results.forEach((item)=>{sum += item.confidence;});
-                    setspeak_score(sum/result_data.results.length*100);
-                    setspeaking(false);
+                const voice_data = await rec_voice.stop_rec_voice();
+                setRec(false);
+                if(voice_data.Blob){
+                    const result = await network.get_Yomikata_score(voice_data.Blob, voice_data.type, From);
+                    let sum = 0;
+                    result.results.forEach((item)=>{
+                        sum += item.confidence;
+                    });
+                    setScore(sum/result.results.length);
                 }
             }
         }catch(e){
+            setRec(false);
+            alert(lang_conf.ErrorText);
             console.error(e);
-            rec_voice.stop_rec_voice();
-            rec_voice.delete_voice_data();
-            setspeaking(false);
         }
     }
 
     return (
         <div
             className="
-                flex flex-col w-full min-h-[276px] p-[16px] mt-[24px]
-                border-[1px] rounded-[6px] border-[#DEE1E6FF]
-                bg-[#ffffff81]
+                h-[10vh] w-full
             "
         >
-            <button
+            <p
                 className="
-                    w-[30px] h-[30px]
-                    bg-[url(/images/back.svg)]
-                    bg-cover mb-3 cursor-pointer
-                "
-
-                onClick={()=>setScreenState("input")}
-            />
-            <div
-                className="
-                    flex items-center flex-row
-                    gap-2 mb-3 border-b-1 border-[#0F0F0FFF]
+                    text-[15px]
                 "
             >
-                <div
-                    className="
-                        w-fit h-fit
-                        text-[25px] font-bold
-                    "
-                >
-                    {from}
-                </div>
-                <Image
-                    src="/images/arrow_right.svg"
-                    className="w-[40px] h-[40px]"
-                    alt=""
-                    width={40}
-                    height={40}
-                />
-                <div
-                    className="
-                        w-fit h-fit
-                        text-[25px] font-bold
-                    "
-                >
-                    {to}
-                </div>
-            </div>
+                {lang_conf.speak_test}
+            </p>
             <div
                 className="
-                    w-full h-[6000px] max-h-[40vh]
-                    overflow-y-auto
-                "
-            >
-                {
-                    results.map((item,idx)=>{
-                        return (
-                            <div
-                                className="
-                                    flex flex-col gap-2
-                                    mb-2
-                                "
-                                key={idx}
-                            >
-                                <Genbun_text
-                                    text={item.original}
-                                />
-                                <Yomikata_text
-                                    text={item.convert}
-                                />
-                            </div>
-                        );
-                    })
-                }
-            </div>
-            <div
-                className="
-                    w-full h-auto
+                    h-auto w-full
                     flex flex-row items-center
-                    justify-around
-                    mt-4
+                    mt-2.5
                 "
             >
                 <button
                     className={`
-                        bg-[url(/images/mic.svg)]
-                        bg-cover
-                        h-[70px] w-[70px]
-                        ${
-                            speaking ? "bg-[#32fefb]"
-                            : "bg-[#a6a5a5]"
-                        }
-                        rounded-full
+                        rounded-full w-[40px] h-[40px]
+                        border-1 border-[#eaeaea]
+                        ml-5 active:scale-95 relative
                     `}
-                    onClick={onclick_func}
-                />
-                <div
-                    className={`
-                        text-[30px]
-                        bg-white p-2 rounded-sm
-                        ${speak_score !== null ? "visible" : "hidden"}
-                    `}
+                    style={{background:Rec ? "#00ff00" : "#FFFFFF"}}
+                    onClick={click_func}
                 >
-                    {`Score: ${speak_score}`}
-                </div>
+                    <Image
+                        src="/images/mic.svg"
+                        alt="mic"
+                        fill={true}
+                    />
+                </button>
+                <p
+                    className="
+                        text-[30px]
+                        border-1 border-[#eaeaea]
+                        rounded-md ml-20 px-3
+                    "
+                >
+                    Score:　{Score}
+                </p>
             </div>
-        </div>
-    );
-}
-
-type Genbun_text_props = {
-    text:string
-}
-
-function Genbun_text({text}:Genbun_text_props){
-    return (
-        <div
-            className="
-                px-3
-                text-[20px] border-b-1
-            "
-        >
-            {text}
-        </div>
-    );
-}
-
-type Yomikata_text_props = {
-    text:string
-}
-
-function Yomikata_text({text}:Yomikata_text_props){
-    return (
-        <div
-            className="
-                px-3
-                text-[20px] border-b-1
-            "
-        >
-            {text}
         </div>
     );
 }
