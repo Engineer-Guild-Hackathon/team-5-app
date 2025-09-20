@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FormInput } from "./FormInput";
 import { useUserID } from "@/hooks/Account";
 import { network } from "@/hooks/States";
-import { lang_conf } from "@/hooks/lang_conf";
 
 export
 function Login_Form() {
@@ -18,19 +17,6 @@ function Login_Form() {
         try{
             const id = await network.send_login(UserName, Password);
             setID(id);
-            await new Promise<void>((resolve,reject)=>{
-                try{
-                    const inter = setInterval(() => {
-                        if(ID){
-                            console.log(ID);
-                            clearInterval(inter);
-                            resolve();
-                        }
-                    }, 100);
-                }catch(e){
-                    reject(e);
-                }
-            });
             window.location.href = "/mypage";
         }catch(e){
             alert(lang_conf.CantLogin);

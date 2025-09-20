@@ -16,10 +16,6 @@ function Yomikata() {
     const setflag = useResults((state)=>state.setLog_flag);
     const flag = useResults((state)=>state.Log_flag);
 
-    useEffect(()=>{
-
-    },[]);
-
     return (
         <div
             className="
@@ -160,18 +156,19 @@ function Test() {
     const [Rec,setRec] = useState<boolean>(false);
     const [Score, setScore] = useState<number|null>(null);
     const lang_conf = useLang((state)=>state.conf);
+    const From = useResults((state)=>state.From);
 
     const click_func = async () => {
         try{
             if(!Rec){
-                rec_voice.start_rec_voice();
+                await rec_voice.start_rec_voice();
                 setRec(true);
                 setScore(null);
             }else{
                 const voice_data = await rec_voice.stop_rec_voice();
                 setRec(false);
                 if(voice_data.Blob){
-                    const result = await network.get_Yomikata_score(voice_data.Blob, voice_data.type);
+                    const result = await network.get_Yomikata_score(voice_data.Blob, voice_data.type, From);
                     let sum = 0;
                     result.results.forEach((item)=>{
                         sum += item.confidence;
@@ -181,6 +178,7 @@ function Test() {
             }
         }catch(e){
             setRec(false);
+            alert(lang_conf.ErrorText);
             console.error(e);
         }
     }

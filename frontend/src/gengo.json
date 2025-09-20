@@ -16,7 +16,9 @@
         "GoLogin":"Loginする",
         "ReinputPass":"パスワードをもう一度入力してください。",
         "CantLogin":"ログインできませんでした。",
-        "CantSignin":"サインインできませんでした。"
+        "CantSignin":"サインインできませんでした。",
+        "ErrorText":"エラーが発生しました。",
+        "Log":"履歴"
     },
     {
         "lang":"English",
@@ -35,7 +37,9 @@
         "GoLogin":"Log in",
         "ReinputPass":"Please enter your password again.",
         "CantLogin":"Unable to log in.",
-        "CantSignin":"Could not sign in."
+        "CantSignin":"Could not sign in.",
+        "ErrorText":"An error has occurred.",
+        "Log":"history"
     },
     {
         "lang":"한국어",
@@ -54,6 +58,8 @@
         "GoLogin":"로그인",
         "ReinputPass":"비밀번호를 다시 입력합니다.",
         "CantLogin":"로그인할 수 없습니다.",
-        "CantSignin":"로그인할 수 없습니다."
+        "CantSignin":"로그인할 수 없습니다.",
+        "ErrorText":"오류가 발생했습니다.",
+        "Log":"히스토리"
     }
 ]

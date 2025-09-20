@@ -50,15 +50,33 @@ function Header() {
                     {
                         UserID ? 
                         <div>
-                            <a href='/mypage'>
+                            <a href='/mypage'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
                                 MyPage
                             </a>
                         </div> :
                         <div>
-                            <a href='/Login'>
+                            <a href='/Login'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
                                 Login
                             </a>/
-                            <a href='/signin'>
+                            <a href='/signin'
+                                className='
+                                    hover:text-[#6effec]
+                                    hover:border-b-1
+                                    hover:border-[#6effec]
+                                '
+                            >
                                 signin
                             </a>
                         </div>

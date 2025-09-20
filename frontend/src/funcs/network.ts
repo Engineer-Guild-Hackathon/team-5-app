@@ -72,7 +72,7 @@ class Network {
             const TypeofTrance = return_num(from,to);
             let send_adress = this.adress + "convert/";
             if(id){
-                send_adress += `?id=${id}`
+                send_adress += `?Id=${id}`
             }
             send_adress = encodeURI(send_adress);
             const res = await fetch(
@@ -100,11 +100,17 @@ class Network {
         }
     }
 
-    async get_Yomikata_score(data:Blob, data_type:string) {
+    async get_Yomikata_score(data:Blob, data_type:string, From:string) {
         try{
             const Form_datas = new FormData();
             Form_datas.append("audio_file",data,`voice.${data_type.split("/")[1]}`);
-            Form_datas.append("engine_params","-a-general");
+            if(From === "日本語"){
+                Form_datas.append("engine_params","-a-general");
+            }else if(From === "한국어"){
+                Form_datas.append("engine_params","-a-general-ko");
+            }else{
+                Form_datas.append("engine_params","-a-general-en");
+            }
             const res = await fetch(
                 this.adress + "pronunciation-assessment-en/",
                 {

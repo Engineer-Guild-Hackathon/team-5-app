@@ -20,6 +20,8 @@ type lang_keys = {
     ReinputPass:string;
     CantLogin:string;
     CantSignin:string;
+    ErrorText:string;
+    Log:string;
 }
 
 export

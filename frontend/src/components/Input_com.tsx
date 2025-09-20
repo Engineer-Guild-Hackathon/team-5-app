@@ -38,6 +38,7 @@ function Input_text() {
             setResult(await network.get_Yomikata(From,To,input_text,UseID));
             setScreenState("result");
         }catch(e){
+            alert(lang_conf.ErrorText);
             console.error(e);
             setScreenState("input");
         }

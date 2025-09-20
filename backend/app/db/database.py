@@ -1,9 +1,9 @@
 from sqlmodel import create_engine, SQLModel, Session, select
 from .table_def import User_table,User_log
 
-user="user_name"
-password="user_password"
-url="192.168.0.176"
+user="furigana"
+password="furigana"
+url="localhost"
 port="3306"
 dbname="your_database"
 

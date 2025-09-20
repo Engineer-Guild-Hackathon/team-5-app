@@ -115,6 +115,8 @@ function Log_Com({Log}:Log_Com_prop) {
 
     const [lang,setlang] = useState<string|null>(null);
 
+    const Lang_conf = useLang((state)=>state.conf);
+
     return (
         <div className="h-fit">
             <p
@@ -123,7 +125,7 @@ function Log_Com({Log}:Log_Com_prop) {
                         ml-3 mb-3
                     "
                 >
-                    履歴
+                    {Lang_conf.Log}
                 </p>
             <div
                 className="
